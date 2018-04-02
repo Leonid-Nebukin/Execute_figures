@@ -1,10 +1,8 @@
-//#pragma comment(lib, "Delayimp.lib")
-//#include <windows.h>
 #include "FiguresDll.h"
 #include <vector>
 #include <memory>
 #include <algorithm>
-bool sort_function(Triangle* i, Triangle* j)
+bool sort_function(Point* i, Point* j)
 {
     return ((*i).Square() < (*j).Square());
 }
@@ -22,14 +20,16 @@ int main() {
    OurContainer[3] = &two_rectangl;
    OurContainer[4] = &one_pol;
    OurContainer[5] = &two_pol;
-   Triangle* p_triangle;
-   p_triangle = static_cast<Triangle*>(OurContainer[0]);
-   std::vector<Triangle*> OurContainer2(2);//выполнение втретьего задания
-   OurContainer2[1] = p_triangle;
-   p_triangle = static_cast<Triangle*>(OurContainer[1]);
-   OurContainer2[0] = p_triangle;
+   std::vector<Point*> OurContainer2;//выполнение третьего задания
+   for (size_t i = 0; i < OurContainer.size(); i++)
+   {
+       if (dynamic_cast<Triangle*>(OurContainer[i])) {
+           OurContainer2.push_back(dynamic_cast<Triangle*>(OurContainer[i]));
+       }
+   }
    std::sort(OurContainer2.begin(), OurContainer2.end(), sort_function);//выполнение четвертого задания
    double sum_square = 0;// выполнение пятого задания
+    #pragma omp parallel for reduction(i:sum_square)
    for (size_t i = 0; i < OurContainer2.size(); i++)
    {
        sum_square += OurContainer2[i]->Square();

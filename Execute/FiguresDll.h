@@ -5,6 +5,7 @@
 #include <stdexcept>
 class FIGURESDLL_EXPORT  Point {
 public:
+    virtual double Square() = 0;
 };
 class FIGURESDLL_EXPORT Triangle :public Point {
 private:
@@ -15,7 +16,7 @@ public:
     Triangle();
     Triangle(const double& x11, const double& y11, const double& x22, const double& y22, const double& x33, const double& y33);
     const Triangle& operator= (const Triangle&);
-    double Square();
+    virtual double Square() override final;
 };
 class FIGURESDLL_EXPORT Rectangle :public Point {
 private:
@@ -25,7 +26,7 @@ private:
 public:
     Rectangle();
     Rectangle(const double& x11, const double& y11, const double& x22, const double& y22, const double& x33, const double& y33);
-    double Square();
+    double Square() override final;
 };
 class FIGURESDLL_EXPORT regular_polygons :public Point {
 private:
@@ -35,5 +36,5 @@ private:
 public:
     regular_polygons();
     regular_polygons(const double& x11, const double& y11, const double& x22, const double& y22, const unsigned int& n);
-    double Square();
+    double Square() override;
 };
